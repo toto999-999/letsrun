@@ -7,10 +7,10 @@ from datetime import datetime, timedelta
 import time
 
 API_KEY = os.environ.get("KRA_API_KEY", "")
-# 검증된 안정적인 마사회 API 주소로 복귀
 URL = "https://apis.data.go.kr/B551015/racedetailresult/getracedetailresult"
 
-MEET_CONFIG = [
+# 일요일 대상: 서울, 부산경남, 영천
+MEET_LIST = [
     ("1", "서울"),
     ("3", "부산경남"),
     ("4", "영천")
@@ -47,27 +47,33 @@ def calculate_ai_score(gate, weight, jockey):
     return round(score, 1)
 
 def fetch_meet_data(meet_code, meet_name, rc_date_str):
+    # 가볍고 빠른 응답을 위해 100건으로 설정
     params = {
         "serviceKey": API_KEY,
         "pageNo": "1",
-        "numOfRows": "200",
+        "numOfRows": "100",
         "meet": meet_code,
         "rc_date": rc_date_str
     }
     full_url = f"{URL}?{urllib.parse.urlencode(params)}"
-    print(f"[{meet_name}] {rc_date_str} 경주 데이터 수신 중...")
+    print(f"[{meet_name}] {rc_date_str} 요청 시작...")
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/xml,text/xml,*/*"
+    }
 
     try:
-        req = urllib.request.Request(full_url, headers={"User-Agent": "Mozilla/5.0"})
-        # 15초 대기
-        with urllib.request.urlopen(req, timeout=15) as response:
+        req = urllib.request.Request(full_url, headers=headers)
+        # 피크 시간대 지연을 고려해 35초 대기
+        with urllib.request.urlopen(req, timeout=35) as response:
             xml_data = response.read()
 
         root = ET.fromstring(xml_data)
         items = root.findall(".//item")
         
         if not items:
-            print(f"[{meet_name}] 등록된 경주 0건")
+            print(f"[{meet_name}] 데이터 없음(0건)")
             return []
 
         races = {}
@@ -112,11 +118,11 @@ def fetch_meet_data(meet_code, meet_name, rc_date_str):
         for r in races.values():
             r["horses"].sort(key=lambda x: x["ai_score"], reverse=True)
 
-        print(f"[{meet_name}] {len(races)}개 경주 수집 성공!")
+        print(f"[{meet_name}] {len(races)}개 경주 수신 완료!")
         return list(races.values())
 
     except Exception as e:
-        print(f"[{meet_name}] 일시적 응답 지연({e}), 다음 경마장으로 계속 진행")
+        print(f"[{meet_name}] 접속 지연 ({e})")
         return []
 
 def main():
@@ -127,19 +133,20 @@ def main():
     today_str = datetime.today().strftime("%Y%m%d")
     all_races = []
 
-    print(f"=== 오늘({today_str}) 전국 경마 수집 시작 ===")
-    for m_code, m_name in MEET_CONFIG:
+    print(f"=== 오늘({today_str}) 전국 데이터 수집 시작 ===")
+    for m_code, m_name in MEET_LIST:
         res = fetch_meet_data(m_code, m_name, today_str)
         all_races.extend(res)
-        time.sleep(0.5)
+        time.sleep(2) # 방화벽 과부하 방지: 경마장별 2초 딜레이
 
-    # 오늘 경주가 아직 전산에 안 올라온 경마장이 있다면 최근 데이터로 보완
+    # 만약 오늘 데이터가 전산에 전혀 안 잡혔다면 지난주 데이터로 대체
     if not all_races:
         last_date = (datetime.today() - timedelta(days=7)).strftime("%Y%m%d")
-        print(f"최근 데이터({last_date})로 대체 수집...")
-        for m_code, m_name in MEET_CONFIG:
+        print(f"오늘 경주 데이터 없음 -> 최근({last_date}) 수집...")
+        for m_code, m_name in MEET_LIST:
             res = fetch_meet_data(m_code, m_name, last_date)
             all_races.extend(res)
+            time.sleep(2)
 
     if all_races:
         meet_order = {"서울": 1, "부산경남": 2, "영천": 3}
@@ -149,9 +156,9 @@ def main():
         ))
         with open("race_data.json", "w", encoding="utf-8") as f:
             json.dump(all_races, f, ensure_ascii=False, indent=2)
-        print(f"최종 완료: 총 {len(all_races)}개 경주 저장 성공!")
+        print(f"🎉 성공: 총 {len(all_races)}개 경주 분석 저장 완료!")
     else:
-        print("수집 가능한 데이터가 없습니다.")
+        print("수집 실패: 마사회 서버 점검 중이거나 응답 없음")
 
 if __name__ == "__main__":
     main()
