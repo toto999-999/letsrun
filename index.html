@@ -12,7 +12,6 @@
         header p { font-size: 0.8rem; opacity: 0.9; margin-top: 4px; }
         .container { padding: 14px; max-width: 500px; margin: 0 auto; }
         
-        /* 추천 배너 기본 (경기 전) */
         .pick-banner {
             background: linear-gradient(135deg, #ff6b6b, #ff8e53);
             color: white;
@@ -22,17 +21,14 @@
             box-shadow: 0 3px 8px rgba(255, 107, 107, 0.3);
             transition: all 0.3s ease;
         }
-        /* 대적중 성공 시 (에메랄드 그린) */
         .pick-banner.hit-exact {
             background: linear-gradient(135deg, #0ba360, #3cba92);
             box-shadow: 0 4px 12px rgba(11, 163, 96, 0.4);
         }
-        /* 단승 1착 적중 시 (파란색) */
         .pick-banner.hit-win {
             background: linear-gradient(135deg, #2193b0, #6dd5ed);
             box-shadow: 0 4px 12px rgba(33, 147, 176, 0.4);
         }
-        /* 경기 종료 후 미적중 (차분한 네이비) */
         .pick-banner.finished-miss {
             background: linear-gradient(135deg, #4b6cb7, #182848);
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
@@ -60,10 +56,9 @@
         .win-rate { font-size: 1.15rem; font-weight: 800; color: #1e3c72; }
         .horse-card.rank-1 .win-rate { color: #e63946; }
 
-        /* 착순 뱃지 */
-        .badge-1st { background-color: #ffd700; color: #7a5800; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
-        .badge-2nd { background-color: #c0c0c0; color: #333; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
-        .badge-3rd { background-color: #cd7f32; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .badge-1st { background-color: #ffd700; color: #7a5800; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; font-weight: 800; }
+        .badge-2nd { background-color: #c0c0c0; color: #333; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; font-weight: 800; }
+        .badge-3rd { background-color: #cd7f32; color: white; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; font-weight: 800; }
     </style>
 </head>
 <body>
@@ -73,7 +68,6 @@
     </header>
 
     <div class="container">
-        <!-- AI 추천 복승식 & 적중 뱃지 배너 -->
         <div id="pickBanner" class="pick-banner">
             <h2>
                 <span id="bannerTitle">🏆 AI 추천 복승식 (1-2위 조합)</span>
@@ -93,7 +87,6 @@
     <script>
         let allRaceData = [];
 
-        // 브라우저 캐시 방지 (?t= 타임스탬프)
         fetch('./race_data.json?t=' + Date.now())
             .then(res => res.json())
             .then(data => {
@@ -124,26 +117,21 @@
             const recBox = document.getElementById('aiRecommendation');
             list.innerHTML = '';
 
-            // AI 추천 1, 2순위 마필
             const h1 = race.horses[0];
             const h2 = race.horses[1];
             recBox.textContent = `[${h1.gate}번] ${h1.name} ✖ [${h2.gate}번] ${h2.name}`;
 
-            // 실제 착순 확정 여부 검사 (1착, 2착 마필 찾기)
-            const actual1st = race.horses.find(h => h.actual_ord === '1');
-            const actual2nd = race.horses.find(h => h.actual_ord === '2');
+            // 🎯 스마트 착순 인식: 01, 1, 1착 등 모든 숫자 형태 완벽 지원
+            const actual1st = race.horses.find(h => parseInt(h.actual_ord, 10) === 1);
+            const actual2nd = race.horses.find(h => parseInt(h.actual_ord, 10) === 2);
 
-            // 배너 스타일 초기화
             banner.className = 'pick-banner';
 
             if (actual1st && actual2nd) {
-                // 경주 종료 상태: 적중률 정밀 검증
-                const actualTop2Gates = [actual1st.gate, actual2nd.gate];
-                const aiTop2Gates = [h1.gate, h2.gate];
+                const actualTop2 = [actual1st.gate, actual2nd.gate];
+                const aiTop2 = [h1.gate, h2.gate];
 
-                // 복승식 적중 (순서 상관없이 1, 2착 모두 맞춤)
-                const isExactHit = aiTop2Gates.includes(actual1st.gate) && aiTop2Gates.includes(actual2nd.gate);
-                // 단승식 적중 (1등 정확히 맞춤)
+                const isExactHit = aiTop2.includes(actual1st.gate) && aiTop2.includes(actual2nd.gate);
                 const isWinHit = (h1.gate === actual1st.gate);
 
                 if (isExactHit) {
@@ -163,22 +151,20 @@
                     recBox.textContent = `실제 결과: 1착 [${actual1st.gate}번] - 2착 [${actual2nd.gate}번]`;
                 }
             } else {
-                // 경기 시작 전
                 bannerTitle.textContent = "🏆 AI 추천 복승식 (1-2위 조합)";
                 hitTag.textContent = "경기 전 예상";
             }
 
-            // 개별 마필 리스트 렌더링
             race.horses.forEach((h, i) => {
                 const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
+                const ordNum = parseInt(h.actual_ord, 10);
                 
-                // 실제 착순 뱃지 표시
                 let badgeHtml = '';
-                if (h.actual_ord === '1') badgeHtml = '<span class="badge-1st">1착 🥇</span>';
-                else if (h.actual_ord === '2') badgeHtml = '<span class="badge-2nd">2착 🥈</span>';
-                else if (h.actual_ord === '3') badgeHtml = '<span class="badge-3rd">3착 🥉</span>';
+                if (ordNum === 1) badgeHtml = '<span class="badge-1st">1착 🥇</span>';
+                else if (ordNum === 2) badgeHtml = '<span class="badge-2nd">2착 🥈</span>';
+                else if (ordNum === 3) badgeHtml = '<span class="badge-3rd">3착 🥉</span>';
 
-                const resultStatus = (h.actual_ord === '-' || !h.actual_ord) ? '경기 전' : `실제 ${h.actual_ord}착`;
+                const resultStatus = isNaN(ordNum) ? '경기 전' : `실제 ${ordNum}착`;
 
                 list.innerHTML += `
                     <div class="horse-card ${rankClass}">
