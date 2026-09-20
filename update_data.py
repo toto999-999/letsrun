@@ -4,16 +4,14 @@ import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
 from datetime import datetime
-import time
 
 API_KEY = os.environ.get("KRA_API_KEY", "")
-# 검증된 안정적인 마사회 API
 URL = "http://apis.data.go.kr/B551015/racedetailresult/getracedetailresult"
 
-# 마사회 공식 권역: 1: 서울, 3: 영남(영천/부산 통합)
+# 일요일 오늘 열린 공식 2대 경마장: 서울(1), 영천(4)
 MEET_CONFIG = [
     ("1", "서울"),
-    ("3", "영천/영남")
+    ("4", "영천")
 ]
 
 TOP_JOCKEYS = {
@@ -26,7 +24,7 @@ TOP_JOCKEYS = {
 
 def calculate_ai_score(gate, weight, jockey):
     score = 50.0
-    score += TOP_JOCKEYS.get(jockey, 10.0)
+    score += TOP_JOCKEYS.get(jockey, 12.0)
 
     try:
         g = int(gate)
@@ -47,7 +45,7 @@ def calculate_ai_score(gate, weight, jockey):
 
     return round(score, 1)
 
-def fetch_meet_data(meet_code, meet_name, date_str):
+def fetch_kra_data(meet_code, meet_name, date_str):
     params = {
         "serviceKey": API_KEY,
         "pageNo": "1",
@@ -56,7 +54,7 @@ def fetch_meet_data(meet_code, meet_name, date_str):
         "rc_date": date_str
     }
     full_url = f"{URL}?{urllib.parse.urlencode(params)}"
-    print(f"[{meet_name}] 마사회 공식 데이터 수신 요청: {date_str}")
+    print(f"[{meet_name}] 마사회 공식 데이터 조회: {date_str} (meet={meet_code})")
 
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
@@ -70,7 +68,7 @@ def fetch_meet_data(meet_code, meet_name, date_str):
 
         root = ET.fromstring(xml_data)
         items = root.findall(".//item")
-        print(f"[{meet_name}] 수신 성공: 총 {len(items)}두 데이터 확보!")
+        print(f"[{meet_name}] {len(items)}두 데이터 수신 완료!")
 
         if not items:
             return []
@@ -106,8 +104,8 @@ def fetch_meet_data(meet_code, meet_name, date_str):
 
             races[key]["horses"].append({
                 "gate": gate,
-                "name": name,          # 100% 마사회 공식 실데이터 말 이름!
-                "jockey": jockey,      # 100% 실제 기수!
+                "name": name,
+                "jockey": jockey,
                 "trainer": trainer,
                 "weight": weight,
                 "actual_ord": ord_no,
@@ -120,7 +118,7 @@ def fetch_meet_data(meet_code, meet_name, date_str):
         return list(races.values())
 
     except Exception as e:
-        print(f"[{meet_name}] 수신 에러: {e}")
+        print(f"[{meet_name}] API 에러: {e}")
         return []
 
 def main():
@@ -131,21 +129,19 @@ def main():
     today_str = datetime.today().strftime("%Y%m%d")
     all_races = []
 
-    print(f"=== {today_str} 전국 경마 (서울 + 영천/영남) 수집 시작 ===")
+    print(f"=== {today_str} 서울(1) + 영천(4) 공식 수집 ===")
     for m_code, m_name in MEET_CONFIG:
-        res = fetch_meet_data(m_code, m_name, today_str)
+        res = fetch_kra_data(m_code, m_name, today_str)
         all_races.extend(res)
-        time.sleep(1)
 
     if all_races:
-        # 서울 1순위, 영남/영천 2순위 정렬
         all_races.sort(key=lambda x: (
-            1 if "서울" in x["meet_name"] else 2,
+            1 if x["meet_name"] == "서울" else 2,
             int(x["race_no"]) if x["race_no"].isdigit() else 99
         ))
         with open("race_data.json", "w", encoding="utf-8") as f:
             json.dump(all_races, f, ensure_ascii=False, indent=2)
-        print(f"🎉 대성공: 총 {len(all_races)}개 경주 (서울 + 영천/영남) 공식 실제 데이터 저장 완료!")
+        print(f"🎉 성공: 총 {len(all_races)}개 경주 실제 데이터 저장 완료!")
     else:
         print("데이터 수신 실패")
 
