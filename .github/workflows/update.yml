@@ -1,10 +1,12 @@
 name: Update Horse Racing Data
 
 on:
-  workflow_dispatch: # 버튼 눌러 즉시 수동 실행 가능
+  workflow_dispatch: # Actions 탭에서 수동 즉시 실행 가능
   schedule:
-    # 한국 시간(KST) 매주 금, 토, 일요일 아침 08:30 자동 실행 (UTC 23:30)
+    # 1. 매주 금, 토, 일요일 아침 08:30 KST 자동 실행 (당일 경주 사전 승부예측 생성)
     - cron: '30 23 * * 4,5,6'
+    # 2. 매주 금, 토, 일요일 저녁 18:30 KST 자동 실행 (전 경주 종료 후 착순 결과 및 적중률 자동 복기)
+    - cron: '30 9 * * 5,6,0'
 
 jobs:
   run-crawler:
@@ -20,16 +22,16 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: 마사회 출전표 수집 및 사전 승부예측
+      - name: 마사회 데이터 수집 및 스마트 AI 분석
         env:
           KRA_API_KEY: ${{ secrets.KRA_API_KEY }}
         run: |
           python update_data.py
 
-      - name: 결과 저장 및 자동 푸시
+      - name: 갱신된 분석 데이터 커밋 및 자동 배포
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add race_data.json
-          git commit -m "Auto update: 당일 출전표 기반 사전 승부예측 완료" || echo "변경사항 없음"
+          git commit -m "Auto update: 스마트 AI 승부예측 및 적중 결과 갱신" || echo "변경사항 없음"
           git push
