@@ -3,10 +3,9 @@ import json
 import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
+from datetime import datetime
 
 API_KEY = os.environ.get("KRA_API_KEY", "")
-# 최신 출전표 API 주소
 URL = "https://apis.data.go.kr/B551015/API26_2/entrySheet_2"
 
 MEET_NAME_MAP = {
@@ -53,16 +52,15 @@ def calculate_ai_score(gate, weight, jockey, rating):
 
     return round(score, 1)
 
-def fetch_all_races(rc_date_str):
-    # meet를 생략하여 전국의 모든 경마장(서울/부산/영천/제주)을 1회 호출로 모두 수집
+def fetch_all_entries():
+    # 날짜/경마장 변수를 누락하여 마사회 공식 설명대로 최근/당일 전체 출전표를 일괄 수신
     params = {
         "serviceKey": API_KEY,
         "pageNo": "1",
-        "numOfRows": "500",
-        "rc_date": rc_date_str
+        "numOfRows": "1000"
     }
     full_url = f"{URL}?{urllib.parse.urlencode(params)}"
-    print(f"전국 출전표 통합 조회 요청: {rc_date_str}")
+    print("마사회 서버로부터 전국 출전표 전체 데이터 일괄 수신 중...")
 
     try:
         req = urllib.request.Request(full_url, headers={"User-Agent": "Mozilla/5.0"})
@@ -71,7 +69,24 @@ def fetch_all_races(rc_date_str):
 
         root = ET.fromstring(xml_data)
         items = root.findall(".//item")
-        print(f"수집된 출전마 데이터 수: {len(items)}두")
+        print(f"총 수신된 데이터: {len(items)}건")
+
+        if not items:
+            print("응답에 item 태그가 없습니다. XML 원본 일부:")
+            print(xml_data.decode('utf-8', errors='ignore')[:300])
+            return []
+
+        # 가장 최신 경주일자 찾기
+        dates = set()
+        for item in items:
+            for tag in ["rcDate", "rc_date", "race_dt", "raceDate"]:
+                n = item.find(tag)
+                if n is not None and n.text and n.text.strip():
+                    dates.add(n.text.strip().replace("-", "").replace(".", ""))
+        
+        today_str = datetime.today().strftime("%Y%m%d")
+        target_date = today_str if today_str in dates else (sorted(list(dates), reverse=True)[0] if dates else today_str)
+        print(f"분석 대상 경주일자: {target_date} (발견된 날짜들: {dates})")
 
         races = {}
         for item in items:
@@ -82,13 +97,15 @@ def fetch_all_races(rc_date_str):
                         return n.text.strip()
                 return ""
 
-            # 경마장 식별 (코드 또는 텍스트)
+            item_date = get_val(["rcDate", "rc_date", "race_dt", "raceDate"]).replace("-", "").replace(".", "")
+            if item_date and item_date != target_date:
+                continue
+
             m_code = get_val(["meet", "rccrs_cd", "meet_cd"]) or "1"
             m_name = get_val(["meet_name", "rccrs_name", "rcCity"])
             if not m_name:
                 m_name = MEET_NAME_MAP.get(m_code, "서울")
             
-            # 영천 순회경마 텍스트가 경주명 등에 포함된 경우 영천으로 자동 분류
             rc_name = get_val(["rcName", "rc_name", "race_name"])
             if "영천" in rc_name or m_code == "4":
                 m_name = "영천"
@@ -107,7 +124,7 @@ def fetch_all_races(rc_date_str):
                     "meet_code": m_code,
                     "meet_name": m_name,
                     "race_no": rc_no,
-                    "race_date": rc_date_str,
+                    "race_date": target_date,
                     "horses": []
                 }
 
@@ -129,39 +146,27 @@ def fetch_all_races(rc_date_str):
 
         return list(races.values())
     except Exception as e:
-        print(f"통합 수집 에러: {e}")
+        print(f"수집 에러 발생: {e}")
         return []
 
 def main():
     if not API_KEY:
-        print("API 키 없음")
+        print("API 키가 설정되지 않았습니다.")
         return
 
-    today_str = datetime.today().strftime("%Y%m%d")
-    all_races = fetch_all_races(today_str)
-
-    # 비경주일이거나 데이터가 없는 경우 최근 데이터 탐색
-    if not all_races:
-        for offset in [1, 2, -1, -2, -7]:
-            target_d = (datetime.today() + timedelta(days=offset)).strftime("%Y%m%d")
-            print(f"당일 데이터 없음 -> {target_d} 탐색...")
-            all_races = fetch_all_races(target_d)
-            if all_races:
-                break
+    all_races = fetch_all_entries()
 
     if all_races:
-        # 경마장별, 경주번호 순으로 정렬 (서울 -> 부산경남 -> 영천 -> 제주)
         meet_order = {"서울": 1, "부산경남": 2, "영천": 3, "제주": 4}
         all_races.sort(key=lambda x: (
             meet_order.get(x["meet_name"], 9),
             int(x["race_no"]) if x["race_no"].isdigit() else 99
         ))
-        
         with open("race_data.json", "w", encoding="utf-8") as f:
             json.dump(all_races, f, ensure_ascii=False, indent=2)
-        print(f"성공: 총 {len(all_races)}개 경주 (서울/부산/영천) 수집 완료!")
+        print(f"완료: 총 {len(all_races)}개 경주 사전 출전표 분석 저장 완료!")
     else:
-        print("출전표 데이터를 찾을 수 없습니다.")
+        print("출전표 데이터 추출 실패")
 
 if __name__ == "__main__":
     main()
