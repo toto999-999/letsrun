@@ -3,36 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KRA 승부예상 AI</title>
+    <title>KRA 전국 승부예상 AI</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif; }
         body { background-color: #f4f6f9; color: #333; padding-bottom: 30px; }
-        header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 20px 16px; text-align: center; position: sticky; top: 0; z-index: 100; }
-        header h1 { font-size: 1.2rem; }
-        .container { padding: 16px; max-width: 500px; margin: 0 auto; }
-        .race-select-card { background: white; border-radius: 12px; padding: 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .race-select-card select { padding: 8px; border-radius: 8px; border: 1px solid #ddd; font-weight: bold; }
-        .horse-card { background: white; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; align-items: center; border-left: 5px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-        .horse-card.rank-1 { border-left-color: #e63946; }
+        header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 18px 16px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        header h1 { font-size: 1.25rem; font-weight: 800; }
+        header p { font-size: 0.8rem; opacity: 0.9; margin-top: 4px; }
+        .container { padding: 14px; max-width: 500px; margin: 0 auto; }
+        .race-select-card { background: white; border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .race-select-card select { padding: 8px 10px; border-radius: 8px; border: 1px solid #ccc; font-weight: bold; font-size: 0.95rem; color: #1e3c72; }
+        .horse-card { background: white; border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; display: flex; align-items: center; border-left: 5px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .horse-card.rank-1 { border-left-color: #e63946; background-color: #fffaf0; }
         .horse-card.rank-2 { border-left-color: #f4a261; }
         .horse-card.rank-3 { border-left-color: #2a9d8f; }
-        .gate-no { width: 36px; height: 36px; background-color: #f1f3f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800; margin-right: 12px; }
+        .gate-no { width: 36px; height: 36px; background-color: #f1f3f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: 800; margin-right: 12px; flex-shrink: 0; }
+        .horse-card.rank-1 .gate-no { background-color: #e63946; color: white; }
         .horse-info { flex-grow: 1; }
-        .horse-name { font-size: 1rem; font-weight: bold; margin-bottom: 4px; }
-        .jockey-name { font-size: 0.8rem; color: #666; }
-        .score-info { text-align: right; }
-        .win-rate { font-size: 1.1rem; font-weight: 800; color: #1e3c72; }
+        .horse-name { font-size: 0.95rem; font-weight: bold; margin-bottom: 3px; }
+        .jockey-name { font-size: 0.78rem; color: #666; }
+        .score-info { text-align: right; flex-shrink: 0; }
+        .win-rate { font-size: 1.05rem; font-weight: 800; color: #1e3c72; }
+        .horse-card.rank-1 .win-rate { color: #e63946; }
     </style>
 </head>
 <body>
     <header>
-        <h1>🐎 마사회 승부예상 AI</h1>
-        <p id="dateInfo">데이터 로딩 중...</p>
+        <h1>🐎 KRA 전국 승부예상 AI</h1>
+        <p id="dateInfo">데이터 분석 중...</p>
     </header>
 
     <div class="container">
         <div class="race-select-card">
-            <span style="font-weight:bold;">경주 선택</span>
+            <span style="font-weight:bold; font-size:0.9rem;">경주장 / 경주</span>
             <select id="raceSelect" onchange="changeRace()"></select>
         </div>
 
@@ -52,15 +55,15 @@
                 data.forEach((r, idx) => {
                     const opt = document.createElement('option');
                     opt.value = idx;
-                    opt.textContent = `서울 ${r.race_no}경주`;
+                    opt.textContent = `[${r.meet_name}] ${r.race_no}경주`;
                     select.appendChild(opt);
                 });
 
-                document.getElementById('dateInfo').textContent = `${data[0].race_date} 분석 데이터`;
+                document.getElementById('dateInfo').textContent = `${data[0].race_date} 경주 분석 결과`;
                 renderRace(0);
             })
             .catch(err => {
-                document.getElementById('dateInfo').textContent = "데이터를 아직 수집하지 않았습니다.";
+                document.getElementById('dateInfo').textContent = "경주 데이터를 불러올 수 없습니다.";
             });
 
         function renderRace(idx) {
@@ -75,7 +78,7 @@
                         <div class="gate-no">${h.gate}</div>
                         <div class="horse-info">
                             <div class="horse-name">${h.name}</div>
-                            <div class="jockey-name">${h.jockey} 기수 | ${h.trainer} 조교사 (${h.weight}kg)</div>
+                            <div class="jockey-name">${h.jockey} 기수 | ${h.trainer} 조교 (${h.weight}kg)</div>
                         </div>
                         <div class="score-info">
                             <div class="win-rate">${h.ai_score}점</div>
