@@ -4,16 +4,17 @@ import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
 from datetime import datetime
+import time
 
 API_KEY = os.environ.get("KRA_API_KEY", "")
 URL = "https://apis.data.go.kr/B551015/API26_2/entrySheet_2"
 
-MEET_NAME_MAP = {
-    "1": "서울",
-    "2": "제주",
-    "3": "부산경남",
-    "4": "영천"
-}
+# 1: 서울, 3: 부산경남, 4: 영천 (일요일 운영 경마장)
+MEET_CONFIG = [
+    ("1", "서울"),
+    ("3", "부산경남"),
+    ("4", "영천")
+]
 
 TOP_JOCKEYS = {
     "문세영": 25.0, "김용근": 20.0, "유승완": 18.0, "송재철": 17.0,
@@ -52,121 +53,118 @@ def calculate_ai_score(gate, weight, jockey, rating):
 
     return round(score, 1)
 
-def fetch_all_entries():
-    # 날짜/경마장 변수를 누락하여 마사회 공식 설명대로 최근/당일 전체 출전표를 일괄 수신
+def fetch_meet_entry(meet_code, meet_name):
+    # 타임아웃 방지를 위해 80건씩 가볍게 요청
     params = {
         "serviceKey": API_KEY,
         "pageNo": "1",
-        "numOfRows": "1000"
+        "numOfRows": "80",
+        "meet": meet_code
     }
     full_url = f"{URL}?{urllib.parse.urlencode(params)}"
-    print("마사회 서버로부터 전국 출전표 전체 데이터 일괄 수신 중...")
+    print(f"[{meet_name}] 출전표 요청 전송...")
 
-    try:
-        req = urllib.request.Request(full_url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=30) as response:
-            xml_data = response.read()
+    for attempt in range(2):
+        try:
+            req = urllib.request.Request(full_url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=40) as response:
+                xml_data = response.read()
 
-        root = ET.fromstring(xml_data)
-        items = root.findall(".//item")
-        print(f"총 수신된 데이터: {len(items)}건")
-
-        if not items:
-            print("응답에 item 태그가 없습니다. XML 원본 일부:")
-            print(xml_data.decode('utf-8', errors='ignore')[:300])
-            return []
-
-        # 가장 최신 경주일자 찾기
-        dates = set()
-        for item in items:
-            for tag in ["rcDate", "rc_date", "race_dt", "raceDate"]:
-                n = item.find(tag)
-                if n is not None and n.text and n.text.strip():
-                    dates.add(n.text.strip().replace("-", "").replace(".", ""))
-        
-        today_str = datetime.today().strftime("%Y%m%d")
-        target_date = today_str if today_str in dates else (sorted(list(dates), reverse=True)[0] if dates else today_str)
-        print(f"분석 대상 경주일자: {target_date} (발견된 날짜들: {dates})")
-
-        races = {}
-        for item in items:
-            def get_val(tags):
-                for t in tags:
-                    n = item.find(t)
-                    if n is not None and n.text and n.text.strip():
-                        return n.text.strip()
-                return ""
-
-            item_date = get_val(["rcDate", "rc_date", "race_dt", "raceDate"]).replace("-", "").replace(".", "")
-            if item_date and item_date != target_date:
-                continue
-
-            m_code = get_val(["meet", "rccrs_cd", "meet_cd"]) or "1"
-            m_name = get_val(["meet_name", "rccrs_name", "rcCity"])
-            if not m_name:
-                m_name = MEET_NAME_MAP.get(m_code, "서울")
+            root = ET.fromstring(xml_data)
+            items = root.findall(".//item")
+            print(f"[{meet_name}] {len(items)}두 수신 성공")
             
-            rc_name = get_val(["rcName", "rc_name", "race_name"])
-            if "영천" in rc_name or m_code == "4":
-                m_name = "영천"
+            if not items:
+                return []
 
-            rc_no = get_val(["rcNo", "rc_no"]) or "1"
-            gate = get_val(["chulNo", "chul_no", "gateNo", "hrNo"]) or "0"
-            name = get_val(["hrName", "hr_name"]) or "경주마"
-            jockey = get_val(["jkName", "jk_name"]) or "기수"
-            trainer = get_val(["trName", "tr_name"]) or "조교사"
-            weight = get_val(["wgBudam", "wg_budam"]) or "55.0"
-            rating = get_val(["rating", "rat"]) or "0"
+            # 가장 최신 경주일자 필터링
+            dates = []
+            for it in items:
+                for tag in ["rcDate", "rc_date", "race_dt", "raceDate"]:
+                    n = it.find(tag)
+                    if n is not None and n.text and n.text.strip():
+                        dates.append(n.text.strip().replace("-", "").replace(".", ""))
+            
+            target_date = sorted(dates, reverse=True)[0] if dates else datetime.today().strftime("%Y%m%d")
 
-            key = f"{m_name}_{rc_no}"
-            if key not in races:
-                races[key] = {
-                    "meet_code": m_code,
-                    "meet_name": m_name,
-                    "race_no": rc_no,
-                    "race_date": target_date,
-                    "horses": []
-                }
+            races = {}
+            for it in items:
+                def get_val(tags):
+                    for t in tags:
+                        n = it.find(t)
+                        if n is not None and n.text and n.text.strip():
+                            return n.text.strip()
+                    return ""
 
-            ai_score = calculate_ai_score(gate, weight, jockey, rating)
+                it_date = get_val(["rcDate", "rc_date", "race_dt", "raceDate"]).replace("-", "").replace(".", "")
+                # 가장 최신 경주일(오늘 등) 데이터만 선별
+                if it_date and it_date != target_date:
+                    continue
 
-            races[key]["horses"].append({
-                "gate": gate,
-                "name": name,
-                "jockey": jockey,
-                "trainer": trainer,
-                "weight": weight,
-                "rating": rating,
-                "actual_ord": "-",
-                "ai_score": ai_score
-            })
+                rc_no = get_val(["rcNo", "rc_no"]) or "1"
+                gate = get_val(["chulNo", "chul_no", "gateNo", "hrNo"]) or "0"
+                name = get_val(["hrName", "hr_name"]) or "경주마"
+                jockey = get_val(["jkName", "jk_name"]) or "기수"
+                trainer = get_val(["trName", "tr_name"]) or "조교사"
+                weight = get_val(["wgBudam", "wg_budam"]) or "55.0"
+                rating = get_val(["rating", "rat"]) or "0"
 
-        for r in races.values():
-            r["horses"].sort(key=lambda x: x["ai_score"], reverse=True)
+                key = f"{meet_name}_{rc_no}"
+                if key not in races:
+                    races[key] = {
+                        "meet_code": meet_code,
+                        "meet_name": meet_name,
+                        "race_no": rc_no,
+                        "race_date": target_date,
+                        "horses": []
+                    }
 
-        return list(races.values())
-    except Exception as e:
-        print(f"수집 에러 발생: {e}")
-        return []
+                ai_score = calculate_ai_score(gate, weight, jockey, rating)
+
+                races[key]["horses"].append({
+                    "gate": gate,
+                    "name": name,
+                    "jockey": jockey,
+                    "trainer": trainer,
+                    "weight": weight,
+                    "rating": rating,
+                    "actual_ord": "-",
+                    "ai_score": ai_score
+                })
+
+            for r in races.values():
+                r["horses"].sort(key=lambda x: x["ai_score"], reverse=True)
+
+            return list(races.values())
+
+        except Exception as e:
+            print(f"[{meet_name}] 시도 {attempt+1}차 지연 에러: {e}")
+            time.sleep(3)
+
+    return []
 
 def main():
     if not API_KEY:
-        print("API 키가 설정되지 않았습니다.")
+        print("API 키 없음")
         return
 
-    all_races = fetch_all_entries()
+    all_races = []
+    for m_code, m_name in MEET_CONFIG:
+        res = fetch_meet_entry(m_code, m_name)
+        all_races.extend(res)
+        time.sleep(1) # 마사회 서버 과부하 방지 1초 간격
 
     if all_races:
-        meet_order = {"서울": 1, "부산경남": 2, "영천": 3, "제주": 4}
+        meet_order = {"서울": 1, "부산경남": 2, "영천": 3}
         all_races.sort(key=lambda x: (
             meet_order.get(x["meet_name"], 9),
             int(x["race_no"]) if x["race_no"].isdigit() else 99
         ))
         with open("race_data.json", "w", encoding="utf-8") as f:
             json.dump(all_races, f, ensure_ascii=False, indent=2)
-        print(f"완료: 총 {len(all_races)}개 경주 사전 출전표 분석 저장 완료!")
+        print(f"대성공: 총 {len(all_races)}개 경주 (서울/부산/영천) 출전표 분석 완료!")
     else:
-        print("출전표 데이터 추출 실패")
+        print("데이터 수집 실패")
 
 if __name__ == "__main__":
     main()
