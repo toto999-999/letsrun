@@ -11,6 +11,8 @@ URL = "http://apis.data.go.kr/B551015/racedetailresult/getracedetailresult"
 # 일요일 오늘 열린 공식 2대 경마장: 서울(1), 영천(4)
 MEET_CONFIG = [
     ("1", "서울"),
+    ("2", "제주"),
+    ("3", "부산경남"),
     ("4", "영천")
 ]
 
@@ -135,8 +137,10 @@ def main():
         all_races.extend(res)
 
     if all_races:
+        # 경마장 표시 순서: 서울 -> 부산경남 -> 영천 -> 제주
+        meet_order = {"서울": 1, "부산경남": 2, "영천": 3, "제주": 4}
         all_races.sort(key=lambda x: (
-            1 if x["meet_name"] == "서울" else 2,
+            meet_order.get(x["meet_name"], 9),
             int(x["race_no"]) if x["race_no"].isdigit() else 99
         ))
         with open("race_data.json", "w", encoding="utf-8") as f:
