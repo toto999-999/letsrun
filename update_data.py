@@ -14,6 +14,41 @@ MEET_MAP = {
     "3": "부산경남"
 }
 
+# 한국 주요 기수 가산점 테이블 (실제 통산 승률/복승률 상위 기수 가중치)
+TOP_JOCKEYS = {
+    "문세영": 25.0, "김용근": 20.0, "유승완": 18.0, "송재철": 17.0,
+    "이혁": 16.0, "임다빈": 15.0, "빅투아르": 22.0, "씨씨옹": 20.0,
+    "다비드": 19.0, "서승운": 24.0, "유현명": 21.0, "이효식": 18.0
+}
+
+def calculate_ai_score(gate, weight, jockey):
+    # 기본 점수 50점 시작
+    score = 50.0
+
+    # 1. 기수 가산점 (상위 기수일수록 가산점)
+    score += TOP_JOCKEYS.get(jockey, 10.0)
+
+    # 2. 게이트 유불리 분석 (모래주로 특성상 1~4번 안쪽 게이트 선행 유리)
+    try:
+        g = int(gate)
+        if 1 <= g <= 4:
+            score += 12.0
+        elif 5 <= g <= 8:
+            score += 8.0
+        else:
+            score += 4.0
+    except:
+        score += 5.0
+
+    # 3. 부담중량 분석 (체중 부담이 적을수록 후반 탄력 유리, 55kg 기준)
+    try:
+        w = float(weight)
+        score += (55.0 - w) * 2.5
+    except:
+        pass
+
+    return round(score, 1)
+
 def fetch_meet_data(meet_code, meet_name, rc_date_str):
     params = {
         "serviceKey": API_KEY,
@@ -43,7 +78,7 @@ def fetch_meet_data(meet_code, meet_name, rc_date_str):
             name = get_val("hrName") or get_val("hr_name") or "경주마"
             jockey = get_val("jkName") or get_val("jk_name") or "기수"
             trainer = get_val("trName") or get_val("tr_name") or "조교사"
-            weight = get_val("wgBudam") or get_val("wg_budam") or "0"
+            weight = get_val("wgBudam") or get_val("wg_budam") or "55.0"
 
             key = f"{meet_name}_{rc_no}"
             if key not in races:
@@ -55,10 +90,8 @@ def fetch_meet_data(meet_code, meet_name, rc_date_str):
                     "horses": []
                 }
 
-            # AI 예상 점수 계산
-            score = 65.0
-            if ord_no.isdigit():
-                score += max(0, 35 - (int(ord_no) * 3))
+            # AI 분석 점수 계산
+            ai_score = calculate_ai_score(gate, weight, jockey)
 
             races[key]["horses"].append({
                 "gate": gate,
@@ -67,35 +100,34 @@ def fetch_meet_data(meet_code, meet_name, rc_date_str):
                 "trainer": trainer,
                 "weight": weight,
                 "actual_ord": ord_no,
-                "ai_score": round(score, 1)
+                "ai_score": ai_score
             })
 
+        # 점수 높은 순서(승률 1위부터)로 재정렬!
         for r in races.values():
             r["horses"].sort(key=lambda x: x["ai_score"], reverse=True)
 
         return list(races.values())
     except Exception as e:
-        print(f"[{meet_name}] 요청 에러: {e}")
+        print(f"[{meet_name}] 에러: {e}")
         return []
 
 def main():
     if not API_KEY:
-        print("API 키가 없습니다.")
+        print("API 키 없음")
         return
 
     today_str = datetime.today().strftime("%Y%m%d")
     all_races = []
 
-    # 1. 오늘 날짜 우선 시도
-    print(f"오늘({today_str}) 데이터 수집 시도...")
+    print(f"오늘({today_str}) 데이터 수집...")
     for m_code, m_name in MEET_MAP.items():
         res = fetch_meet_data(m_code, m_name, today_str)
         all_races.extend(res)
 
-    # 2. 오늘 경주 결과가 아직 없으면(아직 진행 전이거나 비경주일), 최근 주말 데이터 수집
     if not all_races:
         last_date = (datetime.today() - timedelta(days=7)).strftime("%Y%m%d")
-        print(f"오늘 데이터 아직 없음 -> 최근 경주일({last_date}) 수집...")
+        print(f"최근 데이터({last_date}) 수집...")
         for m_code, m_name in MEET_MAP.items():
             res = fetch_meet_data(m_code, m_name, last_date)
             all_races.extend(res)
@@ -104,9 +136,7 @@ def main():
         all_races.sort(key=lambda x: (x["meet_name"], int(x["race_no"]) if x["race_no"].isdigit() else 99))
         with open("race_data.json", "w", encoding="utf-8") as f:
             json.dump(all_races, f, ensure_ascii=False, indent=2)
-        print(f"총 {len(all_races)}개 경주 저장 완료 (race_data.json)!")
-    else:
-        print("수집 가능한 경주 데이터가 없습니다.")
+        print("분석 및 저장 완료!")
 
 if __name__ == "__main__":
     main()
