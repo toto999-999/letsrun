@@ -1,0 +1,962 @@
+[
+  {
+    "race_no": "1",
+    "race_date": "20260913",
+    "horses": [
+      {
+        "gate": "1",
+        "name": "선더마타",
+        "jockey": "송재철",
+        "trainer": "홍윤화",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "2",
+        "name": "라이징킬러",
+        "jockey": "코지",
+        "trainer": "서인석",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "3",
+        "name": "대용마",
+        "jockey": "김태희",
+        "trainer": "임채덕",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "4",
+        "name": "캡틴베러티",
+        "jockey": "김정준",
+        "trainer": "송문길",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "5",
+        "name": "개마무사",
+        "jockey": "최범현",
+        "trainer": "한만달",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "6",
+        "name": "크레이지블루",
+        "jockey": "조상범",
+        "trainer": "신삼영",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "7",
+        "name": "삼정레이스",
+        "jockey": "김용근",
+        "trainer": "박지헌",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "8",
+        "name": "피오라노",
+        "jockey": "정정희",
+        "trainer": "리카디",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "9",
+        "name": "금빛코드",
+        "jockey": "이혁",
+        "trainer": "이관호",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "10",
+        "name": "남경에이스",
+        "jockey": "임다빈",
+        "trainer": "정호익",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "11",
+        "name": "오버앤오버",
+        "jockey": "이용호",
+        "trainer": "송문길",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      }
+    ]
+  },
+  {
+    "race_no": "2",
+    "race_date": "20260913",
+    "horses": [
+      {
+        "gate": "1",
+        "name": "터치더스카이",
+        "jockey": "조한별",
+        "trainer": "박천서",
+        "weight": "54",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "2",
+        "name": "비트스타",
+        "jockey": "장추열",
+        "trainer": "이관호",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "3",
+        "name": "마이티챔프",
+        "jockey": "김태희",
+        "trainer": "조현수",
+        "weight": "56",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "4",
+        "name": "라온더리펀",
+        "jockey": "서승운",
+        "trainer": "이강서",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "5",
+        "name": "블루호라이즌",
+        "jockey": "조상범",
+        "trainer": "토니",
+        "weight": "52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "6",
+        "name": "월드오브드림",
+        "jockey": "코지",
+        "trainer": "박재우",
+        "weight": "56",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "7",
+        "name": "우리의기쁨",
+        "jockey": "김효정",
+        "trainer": "안병기",
+        "weight": "52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "8",
+        "name": "토네르도스",
+        "jockey": "송재철",
+        "trainer": "서홍수",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "9",
+        "name": "천둥의불꽃",
+        "jockey": "이동하",
+        "trainer": "백종수",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "10",
+        "name": "풀스윙",
+        "jockey": "김태훈",
+        "trainer": "심승태",
+        "weight": "52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "11",
+        "name": "마이돌풍",
+        "jockey": "정정희",
+        "trainer": "서인석",
+        "weight": "54",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      }
+    ]
+  },
+  {
+    "race_no": "3",
+    "race_date": "20260913",
+    "horses": [
+      {
+        "gate": "1",
+        "name": "스타에이아이",
+        "jockey": "김태훈",
+        "trainer": "홍윤화",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "2",
+        "name": "로드투스피어",
+        "jockey": "김태현",
+        "trainer": "임채덕",
+        "weight": "54",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "3",
+        "name": "블루하와이",
+        "jockey": "코지",
+        "trainer": "토니",
+        "weight": "56",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "4",
+        "name": "파사에이스",
+        "jockey": "빅투아르",
+        "trainer": "서홍수",
+        "weight": "56",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "5",
+        "name": "엑설런트스톰",
+        "jockey": "조상범",
+        "trainer": "안병기",
+        "weight": "54",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "6",
+        "name": "별처럼",
+        "jockey": "임다빈",
+        "trainer": "정호익",
+        "weight": "56",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "7",
+        "name": "위너남촌",
+        "jockey": "우인철",
+        "trainer": "박지헌",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "8",
+        "name": "원더풀튠업",
+        "jockey": "송재철",
+        "trainer": "백종수",
+        "weight": "54",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "9",
+        "name": "두손라이프",
+        "jockey": "조한별",
+        "trainer": "박재우",
+        "weight": "56",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "10",
+        "name": "스마트밍크",
+        "jockey": "김아현",
+        "trainer": "김동균",
+        "weight": "54",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "11",
+        "name": "청강봄",
+        "jockey": "장추열",
+        "trainer": "성상현",
+        "weight": "54",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      }
+    ]
+  },
+  {
+    "race_no": "4",
+    "race_date": "20260913",
+    "horses": [
+      {
+        "gate": "1",
+        "name": "핫피버",
+        "jockey": "조성환",
+        "trainer": "토니",
+        "weight": "51.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "2",
+        "name": "스톰체이서",
+        "jockey": "김아현",
+        "trainer": "김동균",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "3",
+        "name": "라스트케이",
+        "jockey": "장추열",
+        "trainer": "강환민",
+        "weight": "56.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "4",
+        "name": "텐배거",
+        "jockey": "김태현",
+        "trainer": "심승태",
+        "weight": "57",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "5",
+        "name": "라온더토니",
+        "jockey": "서승운",
+        "trainer": "이강서",
+        "weight": "55.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "6",
+        "name": "스티플",
+        "jockey": "이용호",
+        "trainer": "차우호",
+        "weight": "52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "7",
+        "name": "연동스타",
+        "jockey": "김효정",
+        "trainer": "안병기",
+        "weight": "52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "8",
+        "name": "크레이지챔프",
+        "jockey": "김태희",
+        "trainer": "신삼영",
+        "weight": "53.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "9",
+        "name": "학산태풍",
+        "jockey": "안드레",
+        "trainer": "박병일",
+        "weight": "55.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "10",
+        "name": "와우러너",
+        "jockey": "임기원",
+        "trainer": "이관호",
+        "weight": "51",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "11",
+        "name": "엑설런트한센",
+        "jockey": "우인철",
+        "trainer": "김동균",
+        "weight": "51",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      }
+    ]
+  },
+  {
+    "race_no": "5",
+    "race_date": "20260913",
+    "horses": [
+      {
+        "gate": "1",
+        "name": "퀸즈플라잉",
+        "jockey": "김태훈",
+        "trainer": "이준철",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "2",
+        "name": "파워매직",
+        "jockey": "서승운",
+        "trainer": "이강서",
+        "weight": "54",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "3",
+        "name": "이클립스서니",
+        "jockey": "이동하",
+        "trainer": "서홍수",
+        "weight": "53.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "4",
+        "name": "팔팔날아",
+        "jockey": "김태희",
+        "trainer": "박윤규",
+        "weight": "52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "5",
+        "name": "온누리빛",
+        "jockey": "정정희",
+        "trainer": "안병기",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "6",
+        "name": "마이티캡",
+        "jockey": "안드레",
+        "trainer": "함완식",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "7",
+        "name": "파사퀸",
+        "jockey": "권중석",
+        "trainer": "강성오",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "8",
+        "name": "레이스디바",
+        "jockey": "이혁",
+        "trainer": "토니",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "9",
+        "name": "클레어프리덤",
+        "jockey": "김효정",
+        "trainer": "문병기",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "10",
+        "name": "레인스타",
+        "jockey": "김정준",
+        "trainer": "심승태",
+        "weight": "52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "11",
+        "name": "삼정여제",
+        "jockey": "김용근",
+        "trainer": "강환민",
+        "weight": "53.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      }
+    ]
+  },
+  {
+    "race_no": "6",
+    "race_date": "20260913",
+    "horses": [
+      {
+        "gate": "1",
+        "name": "스위트송",
+        "jockey": "이동하",
+        "trainer": "강성오",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "2",
+        "name": "학산소드",
+        "jockey": "김태훈",
+        "trainer": "문세영",
+        "weight": "56",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "3",
+        "name": "골든볼",
+        "jockey": "서승운",
+        "trainer": "김동균",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "4",
+        "name": "아모스최강",
+        "jockey": "정정희",
+        "trainer": "최용건",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "5",
+        "name": "알파피메일",
+        "jockey": "오수철",
+        "trainer": "이동국",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "6",
+        "name": "한강판타스틱",
+        "jockey": "임다빈",
+        "trainer": "임채덕",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "7",
+        "name": "홀리카이저",
+        "jockey": "안드레",
+        "trainer": "함완식",
+        "weight": "56",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "8",
+        "name": "로드투챔피언",
+        "jockey": "마이아",
+        "trainer": "정호익",
+        "weight": "53.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "9",
+        "name": "클림트월드",
+        "jockey": "우인철",
+        "trainer": "조현수",
+        "weight": "56",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "10",
+        "name": "골드아이디",
+        "jockey": "김정준",
+        "trainer": "심승태",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "11",
+        "name": "와달비",
+        "jockey": "김태희",
+        "trainer": "이동국",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      }
+    ]
+  },
+  {
+    "race_no": "7",
+    "race_date": "20260913",
+    "horses": [
+      {
+        "gate": "1",
+        "name": "나올패스",
+        "jockey": "서승운",
+        "trainer": "한만달",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "2",
+        "name": "카인드큐피드",
+        "jockey": "신형철",
+        "trainer": "강환민",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "3",
+        "name": "두손으뜸",
+        "jockey": "권중석",
+        "trainer": "정호익",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "4",
+        "name": "타이거불패",
+        "jockey": "김용근",
+        "trainer": "이준철",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "5",
+        "name": "라온피날레",
+        "jockey": "장추열",
+        "trainer": "이강서",
+        "weight": "56.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "6",
+        "name": "레드드래곤",
+        "jockey": "조성환",
+        "trainer": "강환민",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "7",
+        "name": "비상벨",
+        "jockey": "김태희",
+        "trainer": "한만달",
+        "weight": "52",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "8",
+        "name": "럭키데이",
+        "jockey": "조상범",
+        "trainer": "토니",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "9",
+        "name": "우와운",
+        "jockey": "김효정",
+        "trainer": "홍윤화",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "10",
+        "name": "은빛유혹",
+        "jockey": "김정준",
+        "trainer": "심승태",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "11",
+        "name": "러브인서울",
+        "jockey": "이용호",
+        "trainer": "문병기",
+        "weight": "56",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      }
+    ]
+  },
+  {
+    "race_no": "8",
+    "race_date": "20260913",
+    "horses": [
+      {
+        "gate": "1",
+        "name": "메이저퓨리",
+        "jockey": "서승운",
+        "trainer": "김동균",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "2",
+        "name": "골든벤투스",
+        "jockey": "최범현",
+        "trainer": "서인석",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "3",
+        "name": "관악산윈디",
+        "jockey": "임기원",
+        "trainer": "송문길",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "4",
+        "name": "블리츠카라",
+        "jockey": "송재철",
+        "trainer": "임채덕",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "5",
+        "name": "삼정셰프",
+        "jockey": "장추열",
+        "trainer": "김동균",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "6",
+        "name": "로열호프케이",
+        "jockey": "코지",
+        "trainer": "문병기",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "7",
+        "name": "걸작마루",
+        "jockey": "김용근",
+        "trainer": "정하백",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "8",
+        "name": "스타플레이",
+        "jockey": "김태훈",
+        "trainer": "심승태",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "9",
+        "name": "클러치더비",
+        "jockey": "이동하",
+        "trainer": "최용건",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      }
+    ]
+  },
+  {
+    "race_no": "9",
+    "race_date": "20260913",
+    "horses": [
+      {
+        "gate": "1",
+        "name": "스팅제트",
+        "jockey": "김태훈",
+        "trainer": "박병일",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "2",
+        "name": "희망밴드",
+        "jockey": "송재철",
+        "trainer": "이동국",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "3",
+        "name": "큐피드커맨드",
+        "jockey": "조한별",
+        "trainer": "박재우",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "4",
+        "name": "라이언비트",
+        "jockey": "김효정",
+        "trainer": "리카디",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "5",
+        "name": "학산프린스",
+        "jockey": "정정희",
+        "trainer": "안병기",
+        "weight": "52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "6",
+        "name": "파드슈발",
+        "jockey": "이동하",
+        "trainer": "한만달",
+        "weight": "56.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "7",
+        "name": "프리메로",
+        "jockey": "이혁",
+        "trainer": "강성오",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "8",
+        "name": "패션스타",
+        "jockey": "푸르칸",
+        "trainer": "이신우",
+        "weight": "56.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "9",
+        "name": "프로미스",
+        "jockey": "김태현",
+        "trainer": "최용건",
+        "weight": "53",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "10",
+        "name": "백룡",
+        "jockey": "임다빈",
+        "trainer": "최영주",
+        "weight": "57",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "11",
+        "name": "영원자이언트",
+        "jockey": "김정준",
+        "trainer": "송문길",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      }
+    ]
+  },
+  {
+    "race_no": "10",
+    "race_date": "20260913",
+    "horses": [
+      {
+        "gate": "1",
+        "name": "우승진리",
+        "jockey": "서승운",
+        "trainer": "박지헌",
+        "weight": "53.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "2",
+        "name": "따뜻한위로",
+        "jockey": "오수철",
+        "trainer": "최용건",
+        "weight": "*52.5",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      },
+      {
+        "gate": "3",
+        "name": "우와",
+        "jockey": "김태훈",
+        "trainer": "전승규",
+        "weight": "55",
+        "actual_ord": "-",
+        "ai_score": 60.0
+      }
+    ]
+  }
+]
