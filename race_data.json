@@ -1175,48 +1175,102 @@
     "horses": [
       {
         "gate": "2",
-        "name": "보현산성",
+        "name": "금호강변",
         "jockey": "서승운",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
         "weight": "54.0",
         "actual_ord": "-",
         "ai_score": 88.5
       },
       {
         "gate": "4",
-        "name": "금호강변",
+        "name": "비호바람",
         "jockey": "김혜선",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
         "weight": "53.0",
         "actual_ord": "-",
         "ai_score": 85.0
       },
       {
         "gate": "1",
-        "name": "영천영웅",
+        "name": "스타로드",
         "jockey": "정도윤",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
         "weight": "55.0",
         "actual_ord": "-",
         "ai_score": 82.0
       },
       {
         "gate": "3",
-        "name": "스타로드",
+        "name": "청마질주",
         "jockey": "최시대",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
         "weight": "56.0",
         "actual_ord": "-",
         "ai_score": 80.5
       },
       {
         "gate": "5",
-        "name": "청마질주",
+        "name": "화랑기상",
         "jockey": "유현명",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
         "weight": "55.0",
         "actual_ord": "-",
         "ai_score": 79.0
+      },
+      {
+        "gate": "7",
+        "name": "운주승리",
+        "jockey": "진겸",
+        "trainer": "부산영남마방",
+        "weight": "53.5",
+        "actual_ord": "-",
+        "ai_score": 78.8
+      },
+      {
+        "gate": "6",
+        "name": "대영천",
+        "jockey": "이효식",
+        "trainer": "부산영남마방",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 77.2
+      },
+      {
+        "gate": "8",
+        "name": "태양의꿈",
+        "jockey": "신윤섭",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "9",
+        "name": "영천번개",
+        "jockey": "권오찬",
+        "trainer": "부산영남마방",
+        "weight": "52.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "11",
+        "name": "영천챔프",
+        "jockey": "김어수",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 66.5
+      },
+      {
+        "gate": "10",
+        "name": "보현스타",
+        "jockey": "송경윤",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 64.0
       }
     ]
   },
@@ -1227,49 +1281,103 @@
     "race_date": "20260920",
     "horses": [
       {
-        "gate": "3",
-        "name": "화랑기상",
-        "jockey": "서승운",
-        "trainer": "부산마방",
-        "weight": "55.0",
-        "actual_ord": "-",
-        "ai_score": 86.0
-      },
-      {
         "gate": "2",
-        "name": "은해천사",
-        "jockey": "이효식",
-        "trainer": "부산마방",
-        "weight": "53.5",
+        "name": "청마질주",
+        "jockey": "서승운",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
         "actual_ord": "-",
-        "ai_score": 83.8
-      },
-      {
-        "gate": "1",
-        "name": "대영천",
-        "jockey": "정도윤",
-        "trainer": "부산마방",
-        "weight": "54.5",
-        "actual_ord": "-",
-        "ai_score": 83.2
+        "ai_score": 88.5
       },
       {
         "gate": "4",
-        "name": "운주승리",
+        "name": "화랑기상",
         "jockey": "김혜선",
-        "trainer": "부산마방",
-        "weight": "54.0",
+        "trainer": "부산영남마방",
+        "weight": "53.0",
         "actual_ord": "-",
-        "ai_score": 82.5
+        "ai_score": 85.0
+      },
+      {
+        "gate": "1",
+        "name": "금호강변",
+        "jockey": "정도윤",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 82.0
+      },
+      {
+        "gate": "3",
+        "name": "비호바람",
+        "jockey": "최시대",
+        "trainer": "부산영남마방",
+        "weight": "56.0",
+        "actual_ord": "-",
+        "ai_score": 80.5
       },
       {
         "gate": "5",
-        "name": "비마질주",
-        "jockey": "최시대",
-        "trainer": "부산마방",
-        "weight": "56.0",
+        "name": "대영천",
+        "jockey": "유현명",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
         "actual_ord": "-",
-        "ai_score": 76.5
+        "ai_score": 79.0
+      },
+      {
+        "gate": "7",
+        "name": "태양의꿈",
+        "jockey": "진겸",
+        "trainer": "부산영남마방",
+        "weight": "53.5",
+        "actual_ord": "-",
+        "ai_score": 78.8
+      },
+      {
+        "gate": "6",
+        "name": "운주승리",
+        "jockey": "이효식",
+        "trainer": "부산영남마방",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 77.2
+      },
+      {
+        "gate": "8",
+        "name": "영천번개",
+        "jockey": "신윤섭",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "9",
+        "name": "보현스타",
+        "jockey": "권오찬",
+        "trainer": "부산영남마방",
+        "weight": "52.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "11",
+        "name": "천마비상",
+        "jockey": "김어수",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 66.5
+      },
+      {
+        "gate": "10",
+        "name": "영천챔프",
+        "jockey": "송경윤",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 64.0
       }
     ]
   },
@@ -1280,49 +1388,103 @@
     "race_date": "20260920",
     "horses": [
       {
-        "gate": "4",
-        "name": "포도향기",
+        "gate": "2",
+        "name": "비호바람",
         "jockey": "서승운",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
         "weight": "54.0",
         "actual_ord": "-",
         "ai_score": 88.5
       },
       {
-        "gate": "3",
-        "name": "태양의꿈",
-        "jockey": "유현명",
-        "trainer": "부산마방",
-        "weight": "54.0",
-        "actual_ord": "-",
-        "ai_score": 85.5
-      },
-      {
-        "gate": "2",
-        "name": "영천번개",
-        "jockey": "최시대",
-        "trainer": "부산마방",
-        "weight": "55.5",
-        "actual_ord": "-",
-        "ai_score": 81.8
-      },
-      {
-        "gate": "5",
-        "name": "쾌속질주",
-        "jockey": "진겸",
-        "trainer": "부산마방",
+        "gate": "4",
+        "name": "대영천",
+        "jockey": "김혜선",
+        "trainer": "부산영남마방",
         "weight": "53.0",
         "actual_ord": "-",
-        "ai_score": 80.0
+        "ai_score": 85.0
       },
       {
         "gate": "1",
-        "name": "영천에이스",
+        "name": "청마질주",
         "jockey": "정도윤",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 82.0
+      },
+      {
+        "gate": "3",
+        "name": "화랑기상",
+        "jockey": "최시대",
+        "trainer": "부산영남마방",
         "weight": "56.0",
         "actual_ord": "-",
-        "ai_score": 79.5
+        "ai_score": 80.5
+      },
+      {
+        "gate": "5",
+        "name": "운주승리",
+        "jockey": "유현명",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 79.0
+      },
+      {
+        "gate": "7",
+        "name": "영천번개",
+        "jockey": "진겸",
+        "trainer": "부산영남마방",
+        "weight": "53.5",
+        "actual_ord": "-",
+        "ai_score": 78.8
+      },
+      {
+        "gate": "6",
+        "name": "태양의꿈",
+        "jockey": "이효식",
+        "trainer": "부산영남마방",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 77.2
+      },
+      {
+        "gate": "8",
+        "name": "보현스타",
+        "jockey": "신윤섭",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "9",
+        "name": "영천챔프",
+        "jockey": "권오찬",
+        "trainer": "부산영남마방",
+        "weight": "52.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "11",
+        "name": "승리의빛",
+        "jockey": "김어수",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 66.5
+      },
+      {
+        "gate": "10",
+        "name": "천마비상",
+        "jockey": "송경윤",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 64.0
       }
     ]
   },
@@ -1333,49 +1495,103 @@
     "race_date": "20260920",
     "horses": [
       {
-        "gate": "3",
-        "name": "영천챔프",
+        "gate": "2",
+        "name": "화랑기상",
         "jockey": "서승운",
-        "trainer": "부산마방",
-        "weight": "56.0",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
         "actual_ord": "-",
-        "ai_score": 83.5
+        "ai_score": 88.5
       },
       {
         "gate": "4",
-        "name": "승리의빛",
-        "jockey": "최시대",
-        "trainer": "부산마방",
-        "weight": "55.0",
-        "actual_ord": "-",
-        "ai_score": 83.0
-      },
-      {
-        "gate": "2",
-        "name": "천마비상",
+        "name": "운주승리",
         "jockey": "김혜선",
-        "trainer": "부산마방",
-        "weight": "54.0",
+        "trainer": "부산영남마방",
+        "weight": "53.0",
         "actual_ord": "-",
-        "ai_score": 82.5
+        "ai_score": 85.0
       },
       {
         "gate": "1",
-        "name": "보현스타",
+        "name": "비호바람",
         "jockey": "정도윤",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
         "weight": "55.0",
         "actual_ord": "-",
         "ai_score": 82.0
       },
       {
+        "gate": "3",
+        "name": "대영천",
+        "jockey": "최시대",
+        "trainer": "부산영남마방",
+        "weight": "56.0",
+        "actual_ord": "-",
+        "ai_score": 80.5
+      },
+      {
         "gate": "5",
-        "name": "거인의길",
+        "name": "태양의꿈",
+        "jockey": "유현명",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 79.0
+      },
+      {
+        "gate": "7",
+        "name": "보현스타",
+        "jockey": "진겸",
+        "trainer": "부산영남마방",
+        "weight": "53.5",
+        "actual_ord": "-",
+        "ai_score": 78.8
+      },
+      {
+        "gate": "6",
+        "name": "영천번개",
         "jockey": "이효식",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 77.2
+      },
+      {
+        "gate": "8",
+        "name": "영천챔프",
+        "jockey": "신윤섭",
+        "trainer": "부산영남마방",
         "weight": "54.0",
         "actual_ord": "-",
-        "ai_score": 78.5
+        "ai_score": 75.5
+      },
+      {
+        "gate": "9",
+        "name": "천마비상",
+        "jockey": "권오찬",
+        "trainer": "부산영남마방",
+        "weight": "52.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "11",
+        "name": "거인의길",
+        "jockey": "김어수",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 66.5
+      },
+      {
+        "gate": "10",
+        "name": "승리의빛",
+        "jockey": "송경윤",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 64.0
       }
     ]
   },
@@ -1386,49 +1602,103 @@
     "race_date": "20260920",
     "horses": [
       {
-        "gate": "3",
-        "name": "신령바람",
-        "jockey": "유현명",
-        "trainer": "부산마방",
+        "gate": "2",
+        "name": "대영천",
+        "jockey": "서승운",
+        "trainer": "부산영남마방",
         "weight": "54.0",
         "actual_ord": "-",
-        "ai_score": 85.5
+        "ai_score": 88.5
       },
       {
         "gate": "4",
-        "name": "영천글로리",
-        "jockey": "서승운",
-        "trainer": "부산마방",
-        "weight": "56.0",
+        "name": "태양의꿈",
+        "jockey": "김혜선",
+        "trainer": "부산영남마방",
+        "weight": "53.0",
         "actual_ord": "-",
-        "ai_score": 83.5
+        "ai_score": 85.0
       },
       {
-        "gate": "2",
-        "name": "금호에이스",
+        "gate": "1",
+        "name": "화랑기상",
         "jockey": "정도윤",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
         "weight": "55.0",
         "actual_ord": "-",
         "ai_score": 82.0
       },
       {
-        "gate": "1",
-        "name": "팔공비상",
+        "gate": "3",
+        "name": "운주승리",
         "jockey": "최시대",
-        "trainer": "부산마방",
-        "weight": "55.5",
+        "trainer": "부산영남마방",
+        "weight": "56.0",
         "actual_ord": "-",
-        "ai_score": 81.8
+        "ai_score": 80.5
       },
       {
         "gate": "5",
-        "name": "영천불패",
-        "jockey": "김혜선",
-        "trainer": "부산마방",
+        "name": "영천번개",
+        "jockey": "유현명",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 79.0
+      },
+      {
+        "gate": "7",
+        "name": "영천챔프",
+        "jockey": "진겸",
+        "trainer": "부산영남마방",
         "weight": "53.5",
         "actual_ord": "-",
-        "ai_score": 79.8
+        "ai_score": 78.8
+      },
+      {
+        "gate": "6",
+        "name": "보현스타",
+        "jockey": "이효식",
+        "trainer": "부산영남마방",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 77.2
+      },
+      {
+        "gate": "8",
+        "name": "천마비상",
+        "jockey": "신윤섭",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "9",
+        "name": "승리의빛",
+        "jockey": "권오찬",
+        "trainer": "부산영남마방",
+        "weight": "52.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "11",
+        "name": "팔공비상",
+        "jockey": "김어수",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 66.5
+      },
+      {
+        "gate": "10",
+        "name": "거인의길",
+        "jockey": "송경윤",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 64.0
       }
     ]
   },
@@ -1439,49 +1709,103 @@
     "race_date": "20260920",
     "horses": [
       {
-        "gate": "4",
-        "name": "영남질주",
-        "jockey": "유현명",
-        "trainer": "부산마방",
-        "weight": "55.0",
-        "actual_ord": "-",
-        "ai_score": 83.0
-      },
-      {
         "gate": "2",
-        "name": "승리의함성",
-        "jockey": "김혜선",
-        "trainer": "부산마방",
+        "name": "운주승리",
+        "jockey": "서승운",
+        "trainer": "부산영남마방",
         "weight": "54.0",
         "actual_ord": "-",
-        "ai_score": 82.5
+        "ai_score": 88.5
       },
       {
-        "gate": "3",
-        "name": "영천그랑프리",
-        "jockey": "서승운",
-        "trainer": "부산마방",
-        "weight": "57.0",
+        "gate": "4",
+        "name": "영천번개",
+        "jockey": "김혜선",
+        "trainer": "부산영남마방",
+        "weight": "53.0",
         "actual_ord": "-",
-        "ai_score": 81.0
+        "ai_score": 85.0
       },
       {
         "gate": "1",
-        "name": "영천최강",
+        "name": "대영천",
         "jockey": "정도윤",
-        "trainer": "부산마방",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 82.0
+      },
+      {
+        "gate": "3",
+        "name": "태양의꿈",
+        "jockey": "최시대",
+        "trainer": "부산영남마방",
         "weight": "56.0",
         "actual_ord": "-",
-        "ai_score": 79.5
+        "ai_score": 80.5
       },
       {
         "gate": "5",
-        "name": "별빛질주",
-        "jockey": "최시대",
-        "trainer": "부산마방",
-        "weight": "56.0",
+        "name": "보현스타",
+        "jockey": "유현명",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
         "actual_ord": "-",
-        "ai_score": 76.5
+        "ai_score": 79.0
+      },
+      {
+        "gate": "7",
+        "name": "천마비상",
+        "jockey": "진겸",
+        "trainer": "부산영남마방",
+        "weight": "53.5",
+        "actual_ord": "-",
+        "ai_score": 78.8
+      },
+      {
+        "gate": "6",
+        "name": "영천챔프",
+        "jockey": "이효식",
+        "trainer": "부산영남마방",
+        "weight": "54.5",
+        "actual_ord": "-",
+        "ai_score": 77.2
+      },
+      {
+        "gate": "8",
+        "name": "승리의빛",
+        "jockey": "신윤섭",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "9",
+        "name": "거인의길",
+        "jockey": "권오찬",
+        "trainer": "부산영남마방",
+        "weight": "52.0",
+        "actual_ord": "-",
+        "ai_score": 75.5
+      },
+      {
+        "gate": "11",
+        "name": "영천영웅",
+        "jockey": "김어수",
+        "trainer": "부산영남마방",
+        "weight": "54.0",
+        "actual_ord": "-",
+        "ai_score": 66.5
+      },
+      {
+        "gate": "10",
+        "name": "팔공비상",
+        "jockey": "송경윤",
+        "trainer": "부산영남마방",
+        "weight": "55.0",
+        "actual_ord": "-",
+        "ai_score": 64.0
       }
     ]
   }
