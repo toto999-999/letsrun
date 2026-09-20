@@ -104,7 +104,7 @@ def fetch_meet_data(meet_code, meet_name, date_str):
             jockey = gv(["jkName", "jk_name"]) or "기수"
             trainer = gv(["trName", "tr_name"]) or "조교사"
             weight = gv(["wgBudam", "wg_budam"]) or "55.0"
-            ord_no = gv(["ord", "ord_no"]) or "-"
+            ord_no = gv(["ordNo", "ord", "ord_no", "rank"]) or "-"
             rc_time = gv(["rcTime", "rc_time"]) or "-"
             track = gv(["track", "trCondition"]) or "양호"
 
