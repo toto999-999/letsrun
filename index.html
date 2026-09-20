@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KRA 승부예상 AI</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif; }
+        body { background-color: #f4f6f9; color: #333; padding-bottom: 30px; }
+        header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 20px 16px; text-align: center; position: sticky; top: 0; z-index: 100; }
+        header h1 { font-size: 1.2rem; }
+        .container { padding: 16px; max-width: 500px; margin: 0 auto; }
+        .race-select-card { background: white; border-radius: 12px; padding: 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .race-select-card select { padding: 8px; border-radius: 8px; border: 1px solid #ddd; font-weight: bold; }
+        .horse-card { background: white; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; align-items: center; border-left: 5px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .horse-card.rank-1 { border-left-color: #e63946; }
+        .horse-card.rank-2 { border-left-color: #f4a261; }
+        .horse-card.rank-3 { border-left-color: #2a9d8f; }
+        .gate-no { width: 36px; height: 36px; background-color: #f1f3f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800; margin-right: 12px; }
+        .horse-info { flex-grow: 1; }
+        .horse-name { font-size: 1rem; font-weight: bold; margin-bottom: 4px; }
+        .jockey-name { font-size: 0.8rem; color: #666; }
+        .score-info { text-align: right; }
+        .win-rate { font-size: 1.1rem; font-weight: 800; color: #1e3c72; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🐎 마사회 승부예상 AI</h1>
+        <p id="dateInfo">데이터 로딩 중...</p>
+    </header>
+
+    <div class="container">
+        <div class="race-select-card">
+            <span style="font-weight:bold;">경주 선택</span>
+            <select id="raceSelect" onchange="changeRace()"></select>
+        </div>
+
+        <div id="horseList"></div>
+    </div>
+
+    <script>
+        let allRaceData = [];
+
+        fetch('./race_data.json')
+            .then(res => res.json())
+            .then(data => {
+                allRaceData = data;
+                const select = document.getElementById('raceSelect');
+                select.innerHTML = '';
+                
+                data.forEach((r, idx) => {
+                    const opt = document.createElement('option');
+                    opt.value = idx;
+                    opt.textContent = `서울 ${r.race_no}경주`;
+                    select.appendChild(opt);
+                });
+
+                document.getElementById('dateInfo').textContent = `${data[0].race_date} 분석 데이터`;
+                renderRace(0);
+            })
+            .catch(err => {
+                document.getElementById('dateInfo').textContent = "데이터를 아직 수집하지 않았습니다.";
+            });
+
+        function renderRace(idx) {
+            const race = allRaceData[idx];
+            const list = document.getElementById('horseList');
+            list.innerHTML = '';
+
+            race.horses.forEach((h, i) => {
+                const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
+                list.innerHTML += `
+                    <div class="horse-card ${rankClass}">
+                        <div class="gate-no">${h.gate}</div>
+                        <div class="horse-info">
+                            <div class="horse-name">${h.name}</div>
+                            <div class="jockey-name">${h.jockey} 기수 | ${h.trainer} 조교사 (${h.weight}kg)</div>
+                        </div>
+                        <div class="score-info">
+                            <div class="win-rate">${h.ai_score}점</div>
+                            <div style="font-size:0.7rem; color:#888;">예상 ${i+1}위 (실제 ${h.actual_ord}착)</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function changeRace() {
+            const val = document.getElementById('raceSelect').value;
+            renderRace(val);
+        }
+    </script>
+</body>
+</html>
