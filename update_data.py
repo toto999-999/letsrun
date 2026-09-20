@@ -1,107 +1,98 @@
-import os
-import json
-import urllib.request
-import urllib.parse
-import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KRA 전국 승부예상 AI</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif; }
+        body { background-color: #f4f6f9; color: #333; padding-bottom: 30px; }
+        header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 18px 16px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        header h1 { font-size: 1.25rem; font-weight: 800; }
+        header p { font-size: 0.8rem; opacity: 0.9; margin-top: 4px; }
+        .container { padding: 14px; max-width: 500px; margin: 0 auto; }
+        .race-select-card { background: white; border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .race-select-card select { padding: 8px 10px; border-radius: 8px; border: 1px solid #ccc; font-weight: bold; font-size: 0.95rem; color: #1e3c72; }
+        .horse-card { background: white; border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; display: flex; align-items: center; border-left: 5px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .horse-card.rank-1 { border-left-color: #e63946; background-color: #fffaf0; }
+        .horse-card.rank-2 { border-left-color: #f4a261; }
+        .horse-card.rank-3 { border-left-color: #2a9d8f; }
+        .gate-no { width: 36px; height: 36px; background-color: #f1f3f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: 800; margin-right: 12px; flex-shrink: 0; }
+        .horse-card.rank-1 .gate-no { background-color: #e63946; color: white; }
+        .horse-info { flex-grow: 1; }
+        .horse-name { font-size: 0.95rem; font-weight: bold; margin-bottom: 3px; }
+        .jockey-name { font-size: 0.78rem; color: #666; }
+        .score-info { text-align: right; flex-shrink: 0; }
+        .win-rate { font-size: 1.05rem; font-weight: 800; color: #1e3c72; }
+        .horse-card.rank-1 .win-rate { color: #e63946; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🐎 KRA 전국 승부예상 AI</h1>
+        <p id="dateInfo">데이터 분석 중...</p>
+    </header>
 
-API_KEY = os.environ.get("KRA_API_KEY", "")
-URL = "https://apis.data.go.kr/B551015/racedetailresult/getracedetailresult"
+    <div class="container">
+        <div class="race-select-card">
+            <span style="font-weight:bold; font-size:0.9rem;">경주장 / 경주</span>
+            <select id="raceSelect" onchange="changeRace()"></select>
+        </div>
 
-def fetch_race_data():
-    if not API_KEY:
-        print("API 키가 설정되지 않았습니다.")
-        return None
+        <div id="horseList"></div>
+    </div>
 
-    # 가장 최근 일요일 날짜 계산
-    today = datetime.today()
-    days_back = (today.weekday() - 6) % 7
-    if days_back == 0 and today.hour < 18:
-        days_back = 7
-    target_date = today - timedelta(days=days_back)
-    rc_date_str = target_date.strftime("%Y%m%d")
+    <script>
+        let allRaceData = [];
 
-    params = {
-        "serviceKey": API_KEY,
-        "pageNo": "1",
-        "numOfRows": "100",
-        "meet": "1",
-        "rc_date": rc_date_str
-    }
-    
-    full_url = f"{URL}?{urllib.parse.urlencode(params)}"
-    print(f"요청 일자: {rc_date_str}")
+        fetch('./race_data.json')
+            .then(res => res.json())
+            .then(data => {
+                allRaceData = data;
+                const select = document.getElementById('raceSelect');
+                select.innerHTML = '';
+                
+                data.forEach((r, idx) => {
+                    const opt = document.createElement('option');
+                    opt.value = idx;
+                    opt.textContent = `[${r.meet_name}] ${r.race_no}경주`;
+                    select.appendChild(opt);
+                });
 
-    try:
-        req = urllib.request.Request(full_url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=15) as response:
-            xml_data = response.read()
-
-        root = ET.fromstring(xml_data)
-        items = root.findall(".//item")
-
-        # 해당 주 데이터가 없으면 1주 전 일요일로 재시도
-        if not items:
-            print("데이터 없음, 1주 전으로 재시도")
-            target_date -= timedelta(days=7)
-            rc_date_str = target_date.strftime("%Y%m%d")
-            params["rc_date"] = rc_date_str
-            full_url = f"{URL}?{urllib.parse.urlencode(params)}"
-            req = urllib.request.Request(full_url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=15) as response:
-                xml_data = response.read()
-            root = ET.fromstring(xml_data)
-            items = root.findall(".//item")
-
-        races = {}
-        for item in items:
-            def get_val(tag):
-                n = item.find(tag)
-                return n.text.strip() if n is not None and n.text else ""
-
-            rc_no = get_val("rcNo") or get_val("rc_no") or "1"
-            ord_no = get_val("ord") or get_val("ord_no") or "-"
-            gate = get_val("chulNo") or get_val("chul_no") or "0"
-            name = get_val("hrName") or get_val("hr_name") or "경주마"
-            jockey = get_val("jkName") or get_val("jk_name") or "기수"
-            trainer = get_val("trName") or get_val("tr_name") or "조교사"
-            weight = get_val("wgBudam") or get_val("wg_budam") or "0"
-
-            if rc_no not in races:
-                races[rc_no] = {"race_no": rc_no, "race_date": rc_date_str, "horses": []}
-
-            # 기본 승부예측 알고리즘 점수 (1착에 가까울수록 높은 점수)
-            score = 60.0
-            if ord_no.isdigit():
-                score += max(0, 40 - (int(ord_no) * 3))
-
-            races[rc_no]["horses"].append({
-                "gate": gate,
-                "name": name,
-                "jockey": jockey,
-                "trainer": trainer,
-                "weight": weight,
-                "actual_ord": ord_no,
-                "ai_score": round(score, 1)
+                document.getElementById('dateInfo').textContent = `${data[0].race_date} 경주 분석 결과`;
+                renderRace(0);
             })
+            .catch(err => {
+                document.getElementById('dateInfo').textContent = "경주 데이터를 불러올 수 없습니다.";
+            });
 
-        # 경주별 점수 높은 순으로 정렬
-        for r in races.values():
-            r["horses"].sort(key=lambda x: x["ai_score"], reverse=True)
+        function renderRace(idx) {
+            const race = allRaceData[idx];
+            const list = document.getElementById('horseList');
+            list.innerHTML = '';
 
-        return list(races.values())
-    except Exception as e:
-        print(f"에러 발생: {e}")
-        return None
+            race.horses.forEach((h, i) => {
+                const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
+                list.innerHTML += `
+                    <div class="horse-card ${rankClass}">
+                        <div class="gate-no">${h.gate}</div>
+                        <div class="horse-info">
+                            <div class="horse-name">${h.name}</div>
+                            <div class="jockey-name">${h.jockey} 기수 | ${h.trainer} 조교 (${h.weight}kg)</div>
+                        </div>
+                        <div class="score-info">
+                            <div class="win-rate">${h.ai_score}점</div>
+                            <div style="font-size:0.7rem; color:#888;">예상 ${i+1}위 (실제 ${h.actual_ord}착)</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
 
-def main():
-    res = fetch_race_data()
-    if res:
-        with open("race_data.json", "w", encoding="utf-8") as f:
-            json.dump(res, f, ensure_ascii=False, indent=2)
-        print("race_data.json 생성 완료!")
-    else:
-        print("수집 실패")
-
-if __name__ == "__main__":
-    main()
+        function changeRace() {
+            const val = document.getElementById('raceSelect').value;
+            renderRace(val);
+        }
+    </script>
+</body>
+</html>
